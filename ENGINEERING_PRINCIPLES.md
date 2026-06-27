@@ -1,171 +1,192 @@
 # Sentinel Engineering Principles
 
-## Why this document exists
+## Purpose
 
-Sentinel is a long-term software engineering project.
+Sentinel is a long-term software engineering project built to demonstrate strong engineering practices while solving real investigation problems.
 
-This document defines the engineering standards that every future design, feature, and pull request should follow.
-
-These principles are intentionally written before implementation begins so the project grows consistently over time.
+This document outlines the principles that guide architectural decisions, features, and pull requests. If a future decision conflicts with these principles, it should be questioned and reviewed before implementation.
 
 ---
 
 # Principle 1 — Architecture Before Code
 
-No feature should be implemented before its architecture has been discussed.
+Every significant feature should begin with design.
 
-Every significant feature should answer:
+Before writing code, we should understand:
 
-- Why does it exist?
-- How does it fit into the system?
-- Can it be extended later?
-- Can it be tested?
-- Does it increase unnecessary complexity?
+* Why the feature exists
+* How it fits into the overall system
+* Whether it adds unnecessary complexity
+* How it will be tested
+* Whether it can evolve without major refactoring
+
+Good architecture helps reduce future problems and rework.
 
 ---
 
-# Principle 2 — Evidence Before Conclusions
+# Principle 2 — Evidence is the Source of Truth
 
 Sentinel is built around evidence.
 
-Evidence is the source of truth.
+Cases, timelines, relationship graphs, AI reasoning, and reports all come from collected evidence.
 
-Graphs, timelines, AI reasoning, reports, and visualizations are all derived from evidence.
-
-The system must never generate conclusions that cannot be traced back to supporting evidence.
+No conclusion should exist without clear, traceable supporting evidence.
 
 ---
 
-# Principle 3 — Explainability First
+# Principle 3 — AI Assists, Humans Decide
 
-Artificial Intelligence should never behave like a black box.
+Artificial Intelligence is a tool, not the investigator.
 
-Every AI-generated conclusion should explain:
+AI should help analysts:
 
-- Supporting evidence
-- Reasoning
-- Confidence
-- Alternative explanations
-- Missing information
+* Organize information
+* Summarize findings
+* Discover relationships
+* Identify missing evidence
+* Explain reasoning
 
-If confidence is low, the system should clearly communicate that more evidence is required.
+Final decisions should always be made by the investigator.
 
 ---
 
-# Principle 4 — Modular Design
+# Principle 4 — Explainability First
 
-Every major component should have a single responsibility.
+Every AI-generated conclusion should include:
 
-Modules should communicate through well-defined interfaces instead of depending directly on implementation details.
+* Supporting evidence
+* Reasoning process
+* Confidence level
+* Alternative explanations
+* Missing information
 
-Replacing a database, AI provider, or plugin should require minimal changes to the rest of the system.
+If confidence is low, Sentinel should clearly communicate uncertainty instead of presenting assumptions as facts.
 
 ---
 
 # Principle 5 — Security by Design
 
-Security is considered during design, not after implementation.
+Security should be considered part of the system design.
 
 Every feature should be reviewed for:
 
-- Authentication
-- Authorization
-- Input validation
-- Output validation
-- Logging
-- Auditing
-- Rate limiting
-- Error handling
+* Authentication
+* Authorization
+* Input validation
+* Output validation
+* Logging
+* Auditing
+* Error handling
+* Rate limiting
+* Least privilege
 
-Security reviews are part of the development process.
-
----
-
-# Principle 6 — Documentation First
-
-Documentation is part of the product.
-
-Every significant feature should include:
-
-- Architecture
-- API documentation
-- Tests
-- Usage documentation
-- Design decisions
-
-Future contributors should understand why decisions were made.
+Security should be built in from the start, not added later.
 
 ---
 
-# Principle 7 — Quality Over Speed
+# Principle 6 — Modularity
 
-Sentinel is not a hackathon project.
+Each module should have a clear and focused responsibility.
 
-The goal is long-term maintainability rather than rapid feature development.
+Modules should communicate through stable interfaces rather than relying on internal implementation details.
 
-When necessary, implementation may be delayed in order to improve architecture or simplify the design.
-
----
-
-# Principle 8 — Testability
-
-Business logic should be easy to test.
-
-The system should favor designs that support:
-
-- Unit tests
-- Integration tests
-- End-to-end tests
-
-Testing should be considered during design instead of after implementation.
+Sentinel should allow components like databases, AI providers, search engines, and plugins to evolve independently when possible.
 
 ---
 
-# Principle 9 — Replaceable Components
+# Principle 7 — Domain First
 
-Sentinel should avoid unnecessary coupling.
+The investigation domain should guide how the system is built.
 
-Examples include:
+Frameworks, libraries, and technologies should support the domain, not define it.
 
-- AI providers
-- Databases
-- Plugins
-- Search engines
-- Storage backends
-
-Replacing one implementation should not require redesigning the entire application.
+Technology choices should not dictate how investigations are performed.
 
 ---
 
-# Principle 10 — Continuous Improvement
+# Principle 8 — Documentation is Part of the Product
 
-Architecture is expected to evolve.
+Documentation should be maintained alongside the code.
 
-If a better design is discovered before implementation, changing direction early is encouraged.
+Every major feature should eventually include:
 
-Reducing future technical debt is more valuable than protecting previous decisions.
+* Architecture documentation
+* Design decisions
+* API documentation
+* Usage documentation
+* Testing documentation
+
+Future contributors should be able to understand both what was built and why it was built.
 
 ---
 
-# Principle 11 — Professional Engineering
+# Principle 9 — Testability
 
-Sentinel is developed as a serious software engineering project.
+The system should be designed to make testing easier.
 
-The objective is to practice professional engineering principles including:
+Business logic should be testable using unit tests.
 
-- Clean Architecture
-- SOLID
-- Documentation
-- Security
-- Testing
-- CI/CD
-- Performance
-- Maintainability
+Important workflows should be validated through integration and end-to-end testing.
+
+Testing should be considered during design, not after implementation.
+
+---
+
+# Principle 10 — Measure Before Optimizing
+
+Performance improvements should be based on actual measurements, not assumptions.
+
+Sentinel should avoid premature optimization while still monitoring performance as it grows.
+
+---
+
+# Principle 11 — Observability
+
+The system should make it easy to understand what is happening internally.
+
+Over time, Sentinel should include:
+
+* Structured logging
+* Metrics
+* Health checks
+* Audit logs
+* Performance monitoring
+
+Systems that are easier to observe are easier to maintain and debug.
+
+---
+
+# Principle 12 — Continuous Improvement
+
+The architecture is expected to evolve over time.
+
+If a better design is identified early, it should be adopted.
+
+Reducing technical debt early is usually easier than fixing it later.
+
+---
+
+# Principle 13 — Professional Engineering
+
+Sentinel should follow professional software engineering practices.
+
+The project focuses on:
+
+* Clean Architecture
+* SOLID principles
+* Secure development
+* Documentation
+* Automated testing
+* CI/CD
+* Maintainability
+* Code reviews
+
+The goal is to build software that stays understandable and maintainable over time.
 
 ---
 
 # Final Principle
 
-Every commit should leave Sentinel in a better state than it was before.
+Every commit should improve Sentinel.
 
-Small improvements made consistently over time produce high-quality software.
+Whether it’s code, documentation, testing, architecture, or security, the repository should always be in a better state after each change.
